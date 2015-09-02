@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-  before_action :find_story, only: [:destroy, :show, :edit, :update]
+  before_action :find_story, only: [:destroy, :show, :edit, :update, :like]
   before_action :load_activities, only: [:index, :show, :new, :edit]
 
   def index
@@ -42,6 +42,15 @@ class StoriesController < ApplicationController
   end
 
   def show
+  end
+
+  def like
+    Story.public_activity_off
+    @story.increment!(:likes)
+    Story.public_activity_on
+    @story.create_activity :like
+    flash[:success] = 'Thanks for sharing your opinion!'
+    redirect_to story_path(@story)
   end
 
   private

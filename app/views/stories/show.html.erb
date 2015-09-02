@@ -1,5 +1,11 @@
 <% page_header @story.title %>
 
+<p>
+  <span class="label label-default"><%= pluralize(@story.likes, 'like') %></span>
+  <%= link_to content_tag(:span, '', class: 'glyphicon glyphicon-thumbs-up') + ' Like it',
+               like_story_path(@story), class: 'btn btn-default btn-sm', method: :post %>
+</p>
+
 <p><%= @story.title %></p>
 
 <div class="btn-group">
